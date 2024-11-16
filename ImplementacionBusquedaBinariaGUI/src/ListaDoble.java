@@ -20,14 +20,14 @@ public class ListaDoble implements Lista, MetodoBusqueda, MetodoOrdenar {
         StringBuilder listaStr = new StringBuilder("Lista en orden: \n");
         NodoDoble actual = ini;
         while (actual != null) {
-            listaStr.append(actual.dato);
+            listaStr.append(actual.dato).append("\n");
             actual = actual.sig;
         }
         listaStr.append("\n");
         listaStr.append("Lista en orden inverso: \n");
         actual = fin;
         while (actual != null) {
-            listaStr.append(actual.dato);
+            listaStr.append(actual.dato).append("\n");
             actual = actual.ant;
         }
         textArea.setText(listaStr.toString());
@@ -70,23 +70,32 @@ public class ListaDoble implements Lista, MetodoBusqueda, MetodoOrdenar {
             JOptionPane.showMessageDialog(null, "Elemento no encontrado");
             return false;
         }
-
+        // Si el nodo a eliminar eta primero
         if (actual == ini) {
             ini = ini.sig;
             if (ini != null) {
                 ini.ant = null;
-            } else if (actual == fin) {
-                fin = fin.ant;
-                if (fin != null) {
-                    fin.sig = null;
-                }
-            } else {
-                actual.ant.sig = actual.sig;
-                actual.sig.ant = actual.ant;
+            } else { // Si es el único nodo
+                fin = null;
             }
-            tam--;
-            actualizarLista(textArea);
         }
+        // Si el nodo a eliminar esta último
+        else if (actual == fin) {
+            fin = fin.ant;
+            if (fin != null) {
+                fin.sig = null;
+            } else { // Si es el único nodo
+                ini = null;
+            }
+        }
+        // Si el nodo a eliminar es intermedio
+        else {
+            actual.ant.sig = actual.sig;
+            actual.sig.ant = actual.ant;
+        }
+
+        tam--;
+        actualizarLista(textArea);
         return true;
     }
 
@@ -130,7 +139,7 @@ public class ListaDoble implements Lista, MetodoBusqueda, MetodoOrdenar {
                 pos++;
             }
             if (actual.dato == dato) {
-                return pos;
+                return medio;
             } else if (actual.dato < dato) {
                 inicio = medio + 1;
             } else {

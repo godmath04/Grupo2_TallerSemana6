@@ -13,6 +13,7 @@ public class ListaDobleGUI {
     private JButton mostrarButton;
     private JTextArea textArea;
     private JPanel pGeneral;
+    private JLabel Elemento;
 
     ListaDoble lis = new ListaDoble();
 
@@ -27,7 +28,7 @@ public class ListaDobleGUI {
                     lis.agregar(valor, textArea);
                     textElemento.setText("");
                 } catch (Exception ex) {
-                    throw new RuntimeException(ex);
+                    JOptionPane.showMessageDialog(null, "Ingrese un numero valido");
                 }
             }
 
@@ -66,19 +67,29 @@ public class ListaDobleGUI {
                     if (pos == -1) {
                         JOptionPane.showMessageDialog(null, "Elemento no encontrado");
                     } else {
-                        JOptionPane.showMessageDialog(null, "Elemento: " + valor + " encontrado en posicion: " + pos);
+                        JOptionPane.showMessageDialog(null, "Elemento: " + valor + " encontrado en posicion: " + (pos + 1));
                     }
                 } catch (Exception ex) {
-                    throw new RuntimeException(ex);
+                    JOptionPane.showMessageDialog(null, "Por favor ingrese un número válido.");
                 }
             }
         });
         busquedaBinariaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /*
-                FALTA CONFIGURAR BOTON
-                 */
+                String buscar = textElemento.getText();
+                try {
+                    int valor = Integer.parseInt(buscar);
+                    int pos = lis.buscarBinaria(valor, textArea);
+
+                    if (pos == -1) {
+                        JOptionPane.showMessageDialog(null, "Elemento no encontrado");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Elementos ordenados.\n" + "Elemento: " + valor + " encontrado en posicion: " + (pos + 1));
+                    }
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Por favor ingrese un número válido.");
+                }
             }
         });
         busquedaInterpoladaButton.addActionListener(new ActionListener() {
